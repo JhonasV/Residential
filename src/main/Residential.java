@@ -5,6 +5,11 @@
  */
 package main;
 
+import controllers.UsersController;
+import view.admin.AdminMenu;
+import views.users.CreateOrUpdate;
+import views.users.UsersCrud;
+
 /**
  *
  * @author jhonas
@@ -16,6 +21,9 @@ public class Residential {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        AdminMenu menu = new AdminMenu();
+        menu.setVisible(true);
     }
     
 }

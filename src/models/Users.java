@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByUpdatedBy", query = "SELECT u FROM Users u WHERE u.updatedBy = :updatedBy")})
 public class Users implements Serializable {
 
+    @Column(name = "createdBy")
+    private Integer createdBy;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -69,9 +72,6 @@ public class Users implements Serializable {
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @Basic(optional = false)
-    @Column(name = "createdBy")
-    private int createdBy;
     @Column(name = "updatedBy")
     private Integer updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
@@ -180,13 +180,6 @@ public class Users implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public int getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(int createdBy) {
-        this.createdBy = createdBy;
-    }
 
     public Integer getUpdatedBy() {
         return updatedBy;
@@ -327,6 +320,14 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "models.Users[ id=" + id + " ]";
+    }
+
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
     
 }

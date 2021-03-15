@@ -34,6 +34,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "UsersRoles.findByUpdatedAt", query = "SELECT u FROM UsersRoles u WHERE u.updatedAt = :updatedAt")})
 public class UsersRoles implements Serializable {
 
+    @Basic(optional = false)
+    @Column(name = "roleName")
+    private String roleName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -150,6 +154,14 @@ public class UsersRoles implements Serializable {
     @Override
     public String toString() {
         return "models.UsersRoles[ id=" + id + " ]";
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
     
 }
