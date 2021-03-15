@@ -34,6 +34,6 @@ Add MySql connection string in  `Residential\src\META-INF\persistence.xml` file
 The MySQL script are the folder `Residential\scripts` to create the tables
 
 ## Run the project
-Rigth click into Login form
+Rigth click to project name and Run
 
 
