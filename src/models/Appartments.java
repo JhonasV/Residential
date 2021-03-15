@@ -40,6 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Appartments.findByUpdatedAt", query = "SELECT a FROM Appartments a WHERE a.updatedAt = :updatedAt")})
 public class Appartments implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -191,6 +194,14 @@ public class Appartments implements Serializable {
     @Override
     public String toString() {
         return "models.Appartments[ id=" + id + " ]";
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

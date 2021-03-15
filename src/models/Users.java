@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByUpdatedBy", query = "SELECT u FROM Users u WHERE u.updatedBy = :updatedBy")})
 public class Users implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     @Column(name = "createdBy")
     private Integer createdBy;
 
@@ -328,6 +331,14 @@ public class Users implements Serializable {
 
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

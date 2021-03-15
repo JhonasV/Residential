@@ -45,6 +45,7 @@ public class UsersDAO implements DAO<Users> {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Users> cq = cb.createQuery(Users.class);
         Root<Users> rootEntry = cq.from(Users.class);
+        cq.where(cb.isNull(rootEntry.get("isDeleted")));
         CriteriaQuery<Users> all = cq.select(rootEntry);
         TypedQuery<Users> allQuery = em.createQuery(all);
         return allQuery.getResultList();
@@ -70,8 +71,9 @@ public class UsersDAO implements DAO<Users> {
     public void Delete(int id) {
         Users user = this.FindOne(id);
         if(user != null){
+            user.setIsDeleted(Boolean.TRUE);
             em.getTransaction().begin();
-            em.remove(user);
+            em.merge(user);
             em.getTransaction().commit();
         }else{
             try {

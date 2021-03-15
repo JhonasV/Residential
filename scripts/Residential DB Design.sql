@@ -5,6 +5,7 @@ CREATE TABLE `users` (
   `password` varchar(1000),
   `name` varchar(50) NOT NULL,
   `lastName` varchar(50) NOT NULL,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -14,6 +15,7 @@ CREATE TABLE `users` (
 CREATE TABLE `roles` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(30) NOT NULL UNIQUE,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -24,6 +26,7 @@ CREATE TABLE `usersRoles` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `roleName` varchar(30) NOT NULL,
   `usersId` int NOT NULL,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -33,6 +36,7 @@ CREATE TABLE `usersRoles` (
 CREATE TABLE `buildings` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL UNIQUE,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -45,6 +49,7 @@ CREATE TABLE `appartments` (
   `name` varchar(20) NOT NULL UNIQUE,
   `number` int NOT NULL,
   `ownerId` int NOT NULL,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -55,6 +60,7 @@ CREATE TABLE `maintenancePays` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `maintenanceHeadersId` int NOT NULL,
   `usersId` int NOT NULL,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -64,6 +70,7 @@ CREATE TABLE `maintenancePays` (
 CREATE TABLE `maintenanceHeaders` (
   `id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `totalCost` double,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -75,6 +82,7 @@ CREATE TABLE `maintenanceLines` (
   `maintenanceHeadersId` int NOT NULL,
   `description` varchar(50) NOT NULL,
   `cost` double,
+  `isDeleted` bit DEFAULT 0,
   `createdAt` DateTime DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` DateTime ON UPDATE CURRENT_TIMESTAMP,
   `createdBy` int,
@@ -86,7 +94,8 @@ CREATE TABLE `visitors` (
   `date` DateTime NOT NULL,
   `name` varchar(30) NOT NULL,
   `ownerId` int NOT NULL,
-  `appartmentsId` int NOT NULL
+  `appartmentsId` int NOT NULL,
+  `isDeleted` bit DEFAULT 0
 );
 
 ALTER TABLE `usersRoles` ADD FOREIGN KEY (`usersId`) REFERENCES `users` (`id`);

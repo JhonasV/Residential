@@ -39,6 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Buildings.findByUpdatedAt", query = "SELECT b FROM Buildings b WHERE b.updatedAt = :updatedAt")})
 public class Buildings implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -156,6 +159,14 @@ public class Buildings implements Serializable {
     @Override
     public String toString() {
         return "models.Buildings[ id=" + id + " ]";
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

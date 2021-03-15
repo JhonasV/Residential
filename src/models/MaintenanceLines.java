@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MaintenanceLines.findByUpdatedAt", query = "SELECT m FROM MaintenanceLines m WHERE m.updatedAt = :updatedAt")})
 public class MaintenanceLines implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -164,6 +167,14 @@ public class MaintenanceLines implements Serializable {
     @Override
     public String toString() {
         return "models.MaintenanceLines[ id=" + id + " ]";
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

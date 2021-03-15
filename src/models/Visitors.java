@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Visitors.findByName", query = "SELECT v FROM Visitors v WHERE v.name = :name")})
 public class Visitors implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -129,6 +132,14 @@ public class Visitors implements Serializable {
     @Override
     public String toString() {
         return "models.Visitors[ id=" + id + " ]";
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

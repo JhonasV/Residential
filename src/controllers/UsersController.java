@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class UsersController implements ActionListener {
         this.usersTable = new DefaultTableModel();
         this.createOrUpdate = r;
         this.usersCrud.btnNewUser.addActionListener(this);
+        this.usersCrud.btnRemover.addActionListener(this);
         this.ShowUserList(usersCrud);
 
 
@@ -61,7 +63,8 @@ public class UsersController implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == createOrUpdate.btnCreate) {
             if(this.ValidateUser(createOrUpdate)){
-                this.CreateUser(createOrUpdate);                
+                this.CreateUser(createOrUpdate);      
+                this.ClearFields(createOrUpdate);
             }
         }
         
@@ -71,27 +74,49 @@ public class UsersController implements ActionListener {
         
         if(e.getSource() == createOrUpdate.btnCancel){
            this.CloseCreateOrUpdate(createOrUpdate);
-           this.ShowUserList(usersCrud);
+            UsersCrud u = new UsersCrud();
+            CreateOrUpdate create = new CreateOrUpdate();
+            UsersController c = new UsersController(u,create);
+            u.setVisible(true);
         }
         
         if(e.getSource() == usersCrud.btnNewUser){
+            usersCrud.dispose();
             createOrUpdate = new CreateOrUpdate();
             UsersController c = new UsersController(createOrUpdate);
             createOrUpdate.setVisible(true);
         }
+        
+        if(e.getSource() == usersCrud.btnRemover){
+            int selectedRow = usersCrud.tblUsers.getSelectedRow();
+            if(selectedRow == -1){
+                JOptionPane.showMessageDialog(null, "Debe de seleccionar un registro primero!", "Advertencia", JOptionPane.INFORMATION_MESSAGE); 
+                return;
+            }
+            
+            int result = JOptionPane.showConfirmDialog(null, "¿Seguro de remover este registro?");
+            if(JOptionPane.OK_OPTION == result){
+            
+               int selectedId = (int)usersCrud.tblUsers.getValueAt(selectedRow, 0);
+               this.RemoveUser(selectedId);
+            }
+        }
+    }
+    
+    public void RemoveUser(int userId){
+         try{
+            usersDao.Delete(userId);
+            this.ShowUserList(usersCrud);
+        }catch(RollbackException ex){
+            JOptionPane.showMessageDialog(null, "Error al intentar borrar registro: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     public void CloseCreateOrUpdate(CreateOrUpdate createOrUpdate){
-         ArrayList<String> emptyFieldNames =  this.GetEmptyFieldsNames(createOrUpdate);
-         
-         if(!emptyFieldNames.isEmpty()){
-            int result = JOptionPane.showConfirmDialog(null, "Hay campos con datos, ¿Estas seguro de esta acción?");
-            if(JOptionPane.OK_OPTION == result){
-                createOrUpdate.dispose();
-            }
-         }else{
-              createOrUpdate.dispose();
-         }
+        int result = JOptionPane.showConfirmDialog(null, "¿Estas seguro de esta acción?");
+        if(JOptionPane.OK_OPTION == result){
+            createOrUpdate.dispose();
+        }
     }
     
     public void ClearFields(CreateOrUpdate createOrUpdate){

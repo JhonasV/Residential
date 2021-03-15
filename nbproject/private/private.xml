@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/controllers/UsersController.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/DAO.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/views/users/UsersCrud.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/main/Residential.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/Users.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/view/admin/AdminMenu.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/MaintenanceLines.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/UsersRoles.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/views/users/CreateOrUpdate.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/Appartments.java</file>
-            <file>file:/C:/Users/jhonas/Documents/NetBeansProjects/Residential/src/models/UsersDAO.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

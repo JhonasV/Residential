@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "UsersRoles.findByUpdatedAt", query = "SELECT u FROM UsersRoles u WHERE u.updatedAt = :updatedAt")})
 public class UsersRoles implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     @Basic(optional = false)
     @Column(name = "roleName")
     private String roleName;
@@ -162,6 +165,14 @@ public class UsersRoles implements Serializable {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }

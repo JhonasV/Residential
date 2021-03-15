@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MaintenancePays.findByUpdatedBy", query = "SELECT m FROM MaintenancePays m WHERE m.updatedBy = :updatedBy")})
 public class MaintenancePays implements Serializable {
 
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
+
     @Column(name = "createdBy")
     private Integer createdBy;
 
@@ -153,6 +156,14 @@ public class MaintenancePays implements Serializable {
 
     public void setCreatedBy(Integer createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
     
 }
