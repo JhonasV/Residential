@@ -24,12 +24,12 @@ Import the project into Netbeans
 Add MySql connection string in  `Residential\src\META-INF\persistence.xml` file
 
 ```bash
-<properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://{host_name}:{port}/{database_name}?zeroDateTimeBehavior=convertToNull"/>
-      <property name="javax.persistence.jdbc.user" value="{user}"/>
-      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="{password}"/>
-    </properties>
+      <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://{host_name}:{port}/{database_name}?zeroDateTimeBehavior=convertToNull"/>
+            <property name="javax.persistence.jdbc.user" value="{user}"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.password" value="{password}"/>
+      </properties>
 ```
 The MySQL script are the folder `Residential\scripts` to create the tables
 
