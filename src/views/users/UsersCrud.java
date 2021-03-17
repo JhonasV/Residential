@@ -37,6 +37,7 @@ public class UsersCrud extends javax.swing.JFrame {
         tblUsers = new javax.swing.JTable();
         btnNewUser = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,6 +100,10 @@ public class UsersCrud extends javax.swing.JFrame {
         btnRemover.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRemover.setText("Remover");
 
+        btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRefresh.setText("Refrescar");
+        btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -112,7 +117,8 @@ public class UsersCrud extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNewUser, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
+                            .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
                     .addComponent(jLabel1))
                 .addGap(14, 14, 14))
         );
@@ -130,7 +136,9 @@ public class UsersCrud extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addComponent(btnNewUser)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemover)))
+                        .addComponent(btnRemover)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnRefresh)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -191,6 +199,7 @@ public class UsersCrud extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnNewUser;
+    public javax.swing.JButton btnRefresh;
     public javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

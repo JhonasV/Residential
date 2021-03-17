@@ -4,11 +4,9 @@
  * and open the template in the editor.
  */
 package main;
+import controllers.AuthController;
+import view.auth.LoginForm;
 
-import controllers.UsersController;
-import view.admin.AdminMenu;
-import views.users.CreateOrUpdate;
-import views.users.UsersCrud;
 
 /**
  *
@@ -21,9 +19,11 @@ public class Residential {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
-        AdminMenu menu = new AdminMenu();
-        menu.setVisible(true);
+        LoginForm loginFrm = new LoginForm();
+        AuthController authContoller = new AuthController(loginFrm);
+        loginFrm.setVisible(true);
+
+
     }
     
 }

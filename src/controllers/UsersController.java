@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.awt.HeadlessException;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,7 @@ public class UsersController implements ActionListener {
         this.createOrUpdate = r;
         this.usersCrud.btnNewUser.addActionListener(this);
         this.usersCrud.btnRemover.addActionListener(this);
+        this.usersCrud.btnRefresh.addActionListener(this);
         this.ShowUserList(usersCrud);
 
 
@@ -74,17 +76,16 @@ public class UsersController implements ActionListener {
         
         if(e.getSource() == createOrUpdate.btnCancel){
            this.CloseCreateOrUpdate(createOrUpdate);
-            UsersCrud u = new UsersCrud();
-            CreateOrUpdate create = new CreateOrUpdate();
-            UsersController c = new UsersController(u,create);
-            u.setVisible(true);
         }
         
-        if(e.getSource() == usersCrud.btnNewUser){
-            usersCrud.dispose();
+        if(e.getSource() == usersCrud.btnNewUser){            
             createOrUpdate = new CreateOrUpdate();
             UsersController c = new UsersController(createOrUpdate);
             createOrUpdate.setVisible(true);
+        }
+        
+        if(e.getSource() == usersCrud.btnRefresh){
+            this.ShowUserList(usersCrud);
         }
         
         if(e.getSource() == usersCrud.btnRemover){
@@ -171,15 +172,41 @@ public class UsersController implements ActionListener {
         user.setName(createOrUpdate.txtName.getText());
         user.setLastName(createOrUpdate.txtLastName.getText());
         
+        
+        
+        
         try{
-            usersDao.Save(user);
-            JOptionPane.showMessageDialog(null, "El Usuario se ha creadio de forma exitosa!", "Exito", JOptionPane.INFORMATION_MESSAGE);
-        }catch(RollbackException ex){
+            Users existsUserName = usersDao.FindOneByUserName(user.getUserName());
+            
+            if(existsUserName == null){
+              Users existsEmail = usersDao.FindOneByEmail(user.getEmail());    
+              if(existsEmail == null){
+                  usersDao.Save(user);
+                  JOptionPane.showMessageDialog(null, "El Usuario se ha creadio de forma exitosa!", "Exito", JOptionPane.INFORMATION_MESSAGE);
+              }else{
+                  JOptionPane.showMessageDialog(null, "El email ingresado ya se encuentra en uso. ", "Advertencia", JOptionPane.INFORMATION_MESSAGE);               
+              }
+              
+              
+            }else{
+               JOptionPane.showMessageDialog(null, "El nombre de usuario ya se encuentra en uso ", "Advertencia", JOptionPane.INFORMATION_MESSAGE);               
+            }
+            
+            
+        }catch(RollbackException | HeadlessException ex){
             JOptionPane.showMessageDialog(null, "Error al intentar crear el usuario: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
+    public void ClearTable(){
+        while (usersTable.getRowCount()>0)
+          {
+             usersTable.removeRow(0);
+          }
+    }
+    
     public void ShowUserList(UsersCrud userCrud){
+        this.ClearTable();
         List<Users> users = this.usersDao.FindAll();
         usersTable = (DefaultTableModel)userCrud.tblUsers.getModel();
         Object[] object = new Object[5];

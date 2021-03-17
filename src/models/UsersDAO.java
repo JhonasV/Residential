@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -36,10 +37,42 @@ public class UsersDAO implements DAO<Users> {
     }
     
     @Override
-    public Users FindOne(Object filter){       
+    public Users FindOne(int filter){       
         return em.find(Users.class, filter);       
     }
+    
+    public Users FindOneByUserName(Object filter){       
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Users> criteria = builder.createQuery(Users.class);
+        Root<Users> from = criteria.from(Users.class);
+        criteria.select(from);
+        criteria.where(builder.equal(from.get(Users_.userName), filter));
+        TypedQuery<Users> typed = em.createQuery(criteria);
+        
+        try{
+            return typed.getSingleResult();
+        }catch(final NoResultException nre){
+            return null;
+        }
+        
+    }
+    public Users FindOneByEmail(Object filter){       
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<Users> criteria = builder.createQuery(Users.class);
+        Root<Users> from = criteria.from(Users.class);
+        criteria.select(from);
+        criteria.where(builder.equal(from.get(Users_.email), filter));
+        TypedQuery<Users> typed = em.createQuery(criteria);
+        
+        try{
+            return typed.getSingleResult();
+        }catch(final NoResultException nre){
+            return null;
+        }
+        
+    }
 
+    
     @Override
     public List<Users> FindAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -50,7 +83,7 @@ public class UsersDAO implements DAO<Users> {
         TypedQuery<Users> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
-
+    
     @Override
     public void Update(Users entity) {
         Users oldEntity = this.FindOne(entity.getId());

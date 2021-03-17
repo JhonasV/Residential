@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface DAO<T> {
     void Save(T entity);
-    T FindOne(Object filter);
+    T FindOne(int filter);
     List<T> FindAll();
     void Update(T entity);
     void Delete(int id);
