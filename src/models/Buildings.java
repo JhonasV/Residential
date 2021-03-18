@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,22 +37,22 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Buildings.findAll", query = "SELECT b FROM Buildings b")
     , @NamedQuery(name = "Buildings.findById", query = "SELECT b FROM Buildings b WHERE b.id = :id")
     , @NamedQuery(name = "Buildings.findByName", query = "SELECT b FROM Buildings b WHERE b.name = :name")
+    , @NamedQuery(name = "Buildings.findByIsDeleted", query = "SELECT b FROM Buildings b WHERE b.isDeleted = :isDeleted")
     , @NamedQuery(name = "Buildings.findByCreatedAt", query = "SELECT b FROM Buildings b WHERE b.createdAt = :createdAt")
     , @NamedQuery(name = "Buildings.findByUpdatedAt", query = "SELECT b FROM Buildings b WHERE b.updatedAt = :updatedAt")})
 public class Buildings implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -60,7 +62,7 @@ public class Buildings implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "buildingsId")
     private Collection<Appartments> appartmentsCollection;
     @JoinColumn(name = "createdBy", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Users createdBy;
     @JoinColumn(name = "updatedBy", referencedColumnName = "id")
     @ManyToOne
@@ -73,10 +75,9 @@ public class Buildings implements Serializable {
         this.id = id;
     }
 
-    public Buildings(Integer id, String name, Date createdAt) {
+    public Buildings(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -93,6 +94,14 @@ public class Buildings implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Date getCreatedAt() {
@@ -159,14 +168,6 @@ public class Buildings implements Serializable {
     @Override
     public String toString() {
         return "models.Buildings[ id=" + id + " ]";
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

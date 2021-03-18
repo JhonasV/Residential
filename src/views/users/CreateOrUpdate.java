@@ -18,6 +18,7 @@ public class CreateOrUpdate extends javax.swing.JFrame {
      */
     public CreateOrUpdate() {
         initComponents();
+        lblHideId.setVisible(false);
     }
 
     /**
@@ -30,7 +31,7 @@ public class CreateOrUpdate extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblUserFrm = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         lblUserName = new javax.swing.JLabel();
         lblEmail = new javax.swing.JLabel();
@@ -45,11 +46,12 @@ public class CreateOrUpdate extends javax.swing.JFrame {
         btnCreate = new javax.swing.JButton();
         btnClear = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        lblHideId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Creacion de Usuarios");
+        lblUserFrm.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblUserFrm.setText("Creacion de Usuarios");
 
         lblUserName.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblUserName.setText("Nombre de usuario");
@@ -82,11 +84,14 @@ public class CreateOrUpdate extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jSeparator1)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblUserFrm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblHideId)
+                        .addGap(65, 65, 65))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(lblUserName)
@@ -119,7 +124,9 @@ public class CreateOrUpdate extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblUserFrm, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHideId))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -181,13 +188,14 @@ public class CreateOrUpdate extends javax.swing.JFrame {
     public javax.swing.JButton btnCancel;
     public javax.swing.JButton btnClear;
     public javax.swing.JButton btnCreate;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblEmail;
+    public javax.swing.JLabel lblHideId;
     private javax.swing.JLabel lblLastName;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblPassword;
+    public javax.swing.JLabel lblUserFrm;
     private javax.swing.JLabel lblUserName;
     public javax.swing.JTextField txtEmail;
     public javax.swing.JTextField txtLastName;

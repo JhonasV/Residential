@@ -52,6 +52,7 @@ public class UsersController implements ActionListener {
         this.usersCrud.btnNewUser.addActionListener(this);
         this.usersCrud.btnRemover.addActionListener(this);
         this.usersCrud.btnRefresh.addActionListener(this);
+        this.usersCrud.btnUpdate.addActionListener(this);
         this.ShowUserList(usersCrud);
 
 
@@ -65,7 +66,11 @@ public class UsersController implements ActionListener {
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == createOrUpdate.btnCreate) {
             if(this.ValidateUser(createOrUpdate)){
-                this.CreateUser(createOrUpdate);      
+                if(createOrUpdate.btnCreate.getText().contains("Actualizar")){
+                    this.UpdateUser(createOrUpdate);
+                }else{
+                    this.CreateUser(createOrUpdate);  
+                }
                 this.ClearFields(createOrUpdate);
             }
         }
@@ -101,6 +106,37 @@ public class UsersController implements ActionListener {
                int selectedId = (int)usersCrud.tblUsers.getValueAt(selectedRow, 0);
                this.RemoveUser(selectedId);
             }
+        }
+        
+        if(e.getSource() == usersCrud.btnUpdate){
+            int selectedRow = usersCrud.tblUsers.getSelectedRow();
+            if(selectedRow == -1){
+                JOptionPane.showMessageDialog(null, "Debe de seleccionar un registro primero!", "Advertencia", JOptionPane.INFORMATION_MESSAGE); 
+                return;
+            }
+            
+            int selectedId = (int)usersCrud.tblUsers.getValueAt(selectedRow, 0);
+            this.LoadUserToUpdate(selectedId);
+        }
+    }
+    
+    public void LoadUserToUpdate(int userId){
+        try{
+            Users user = usersDao.FindOne(userId);
+            CreateOrUpdate updateFrm = new CreateOrUpdate();
+            updateFrm.txtEmail.setText(user.getEmail());
+            updateFrm.txtLastName.setText(user.getLastName());
+            updateFrm.txtName.setText(user.getName());
+            updateFrm.txtPassword.setText(user.getPassword());
+            updateFrm.txtUserName.setText(user.getUserName());
+            updateFrm.lblUserFrm.setText("Actualización de Usuarios");
+            updateFrm.btnCreate.setText("Actualizar");
+            updateFrm.lblHideId.setText(user.getId().toString());
+            UsersController c = new UsersController(updateFrm);
+            updateFrm.setVisible(true);
+            
+        }catch(RollbackException ex){
+            JOptionPane.showMessageDialog(null, "Error al intentar cargar usuario para actualizar: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -171,10 +207,7 @@ public class UsersController implements ActionListener {
         user.setPassword(createOrUpdate.txtPassword.getText());
         user.setName(createOrUpdate.txtName.getText());
         user.setLastName(createOrUpdate.txtLastName.getText());
-        
-        
-        
-        
+
         try{
             Users existsUserName = usersDao.FindOneByUserName(user.getUserName());
             
@@ -191,6 +224,29 @@ public class UsersController implements ActionListener {
             }else{
                JOptionPane.showMessageDialog(null, "El nombre de usuario ya se encuentra en uso ", "Advertencia", JOptionPane.INFORMATION_MESSAGE);               
             }
+            
+            
+        }catch(RollbackException | HeadlessException ex){
+            JOptionPane.showMessageDialog(null, "Error al intentar crear el usuario: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void UpdateUser(CreateOrUpdate createOrUpdate){
+        Users user = new Users();
+        user.setUserName(createOrUpdate.txtUserName.getText());
+        user.setEmail(createOrUpdate.txtEmail.getText());
+        user.setPassword(createOrUpdate.txtPassword.getText());
+        user.setName(createOrUpdate.txtName.getText());
+        user.setLastName(createOrUpdate.txtLastName.getText());
+        user.setId(Integer.parseInt(createOrUpdate.lblHideId.getText()));
+        try{
+            Users existsUser = usersDao.FindOne(user.getId());
+            if(existsUser != null){
+                usersDao.Update(user);
+            }else{
+                JOptionPane.showMessageDialog(null, "No pudimos completar la actualizacion en estos momentos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+           
             
             
         }catch(RollbackException | HeadlessException ex){

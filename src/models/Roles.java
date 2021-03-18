@@ -6,21 +6,19 @@
 package models;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,37 +31,34 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r")
     , @NamedQuery(name = "Roles.findById", query = "SELECT r FROM Roles r WHERE r.id = :id")
     , @NamedQuery(name = "Roles.findByName", query = "SELECT r FROM Roles r WHERE r.name = :name")
+    , @NamedQuery(name = "Roles.findByIsDeleted", query = "SELECT r FROM Roles r WHERE r.isDeleted = :isDeleted")
     , @NamedQuery(name = "Roles.findByCreatedAt", query = "SELECT r FROM Roles r WHERE r.createdAt = :createdAt")
     , @NamedQuery(name = "Roles.findByUpdatedAt", query = "SELECT r FROM Roles r WHERE r.updatedAt = :updatedAt")
     , @NamedQuery(name = "Roles.findByCreatedBy", query = "SELECT r FROM Roles r WHERE r.createdBy = :createdBy")
     , @NamedQuery(name = "Roles.findByUpdatedBy", query = "SELECT r FROM Roles r WHERE r.updatedBy = :updatedBy")})
 public class Roles implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
-    @Column(name = "createdBy")
-    private Integer createdBy;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Column(name = "createdBy")
+    private Integer createdBy;
     @Column(name = "updatedBy")
     private Integer updatedBy;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolesId")
-    private Collection<UsersRoles> usersRolesCollection;
 
     public Roles() {
     }
@@ -72,11 +67,9 @@ public class Roles implements Serializable {
         this.id = id;
     }
 
-    public Roles(Integer id, String name, Date createdAt, int createdBy) {
+    public Roles(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
     }
 
     public Integer getId() {
@@ -95,6 +88,14 @@ public class Roles implements Serializable {
         this.name = name;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -111,6 +112,13 @@ public class Roles implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public Integer getUpdatedBy() {
         return updatedBy;
@@ -118,15 +126,6 @@ public class Roles implements Serializable {
 
     public void setUpdatedBy(Integer updatedBy) {
         this.updatedBy = updatedBy;
-    }
-
-    @XmlTransient
-    public Collection<UsersRoles> getUsersRolesCollection() {
-        return usersRolesCollection;
-    }
-
-    public void setUsersRolesCollection(Collection<UsersRoles> usersRolesCollection) {
-        this.usersRolesCollection = usersRolesCollection;
     }
 
     @Override
@@ -152,22 +151,6 @@ public class Roles implements Serializable {
     @Override
     public String toString() {
         return "models.Roles[ id=" + id + " ]";
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

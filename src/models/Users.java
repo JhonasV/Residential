@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -37,20 +39,16 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByPassword", query = "SELECT u FROM Users u WHERE u.password = :password")
     , @NamedQuery(name = "Users.findByName", query = "SELECT u FROM Users u WHERE u.name = :name")
     , @NamedQuery(name = "Users.findByLastName", query = "SELECT u FROM Users u WHERE u.lastName = :lastName")
+    , @NamedQuery(name = "Users.findByIsDeleted", query = "SELECT u FROM Users u WHERE u.isDeleted = :isDeleted")
     , @NamedQuery(name = "Users.findByCreatedAt", query = "SELECT u FROM Users u WHERE u.createdAt = :createdAt")
     , @NamedQuery(name = "Users.findByUpdatedAt", query = "SELECT u FROM Users u WHERE u.updatedAt = :updatedAt")
     , @NamedQuery(name = "Users.findByCreatedBy", query = "SELECT u FROM Users u WHERE u.createdBy = :createdBy")
     , @NamedQuery(name = "Users.findByUpdatedBy", query = "SELECT u FROM Users u WHERE u.updatedBy = :updatedBy")})
 public class Users implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
-    @Column(name = "createdBy")
-    private Integer createdBy;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -68,22 +66,25 @@ public class Users implements Serializable {
     @Basic(optional = false)
     @Column(name = "lastName")
     private String lastName;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Column(name = "createdBy")
+    private Integer createdBy;
     @Column(name = "updatedBy")
     private Integer updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ownerId")
     private Collection<Appartments> appartmentsCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    @OneToMany(mappedBy = "createdBy")
     private Collection<Appartments> appartmentsCollection1;
     @OneToMany(mappedBy = "updatedBy")
     private Collection<Appartments> appartmentsCollection2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    @OneToMany(mappedBy = "createdBy")
     private Collection<MaintenanceLines> maintenanceLinesCollection;
     @OneToMany(mappedBy = "updatedBy")
     private Collection<MaintenanceLines> maintenanceLinesCollection1;
@@ -93,11 +94,11 @@ public class Users implements Serializable {
     private Collection<Visitors> visitorsCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usersId")
     private Collection<UsersRoles> usersRolesCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    @OneToMany(mappedBy = "createdBy")
     private Collection<UsersRoles> usersRolesCollection1;
     @OneToMany(mappedBy = "updatedBy")
     private Collection<UsersRoles> usersRolesCollection2;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "createdBy")
+    @OneToMany(mappedBy = "createdBy")
     private Collection<Buildings> buildingsCollection;
     @OneToMany(mappedBy = "updatedBy")
     private Collection<Buildings> buildingsCollection1;
@@ -109,14 +110,12 @@ public class Users implements Serializable {
         this.id = id;
     }
 
-    public Users(Integer id, String userName, String email, String name, String lastName, Date createdAt, int createdBy) {
+    public Users(Integer id, String userName, String email, String name, String lastName) {
         this.id = id;
         this.userName = userName;
         this.email = email;
         this.name = name;
         this.lastName = lastName;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
     }
 
     public Integer getId() {
@@ -167,6 +166,14 @@ public class Users implements Serializable {
         this.lastName = lastName;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -183,6 +190,13 @@ public class Users implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public Integer getUpdatedBy() {
         return updatedBy;
@@ -323,22 +337,6 @@ public class Users implements Serializable {
     @Override
     public String toString() {
         return "models.Users[ id=" + id + " ]";
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

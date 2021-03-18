@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,37 +32,34 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "UsersRoles.findAll", query = "SELECT u FROM UsersRoles u")
     , @NamedQuery(name = "UsersRoles.findById", query = "SELECT u FROM UsersRoles u WHERE u.id = :id")
+    , @NamedQuery(name = "UsersRoles.findByRoleName", query = "SELECT u FROM UsersRoles u WHERE u.roleName = :roleName")
+    , @NamedQuery(name = "UsersRoles.findByIsDeleted", query = "SELECT u FROM UsersRoles u WHERE u.isDeleted = :isDeleted")
     , @NamedQuery(name = "UsersRoles.findByCreatedAt", query = "SELECT u FROM UsersRoles u WHERE u.createdAt = :createdAt")
     , @NamedQuery(name = "UsersRoles.findByUpdatedAt", query = "SELECT u FROM UsersRoles u WHERE u.updatedAt = :updatedAt")})
 public class UsersRoles implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
-    @Basic(optional = false)
-    @Column(name = "roleName")
-    private String roleName;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
+    @Column(name = "roleName")
+    private String roleName;
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @JoinColumn(name = "rolesId", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Roles rolesId;
     @JoinColumn(name = "usersId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Users usersId;
     @JoinColumn(name = "createdBy", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Users createdBy;
     @JoinColumn(name = "updatedBy", referencedColumnName = "id")
     @ManyToOne
@@ -73,9 +72,9 @@ public class UsersRoles implements Serializable {
         this.id = id;
     }
 
-    public UsersRoles(Integer id, Date createdAt) {
+    public UsersRoles(Integer id, String roleName) {
         this.id = id;
-        this.createdAt = createdAt;
+        this.roleName = roleName;
     }
 
     public Integer getId() {
@@ -84,6 +83,22 @@ public class UsersRoles implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Date getCreatedAt() {
@@ -100,14 +115,6 @@ public class UsersRoles implements Serializable {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public Roles getRolesId() {
-        return rolesId;
-    }
-
-    public void setRolesId(Roles rolesId) {
-        this.rolesId = rolesId;
     }
 
     public Users getUsersId() {
@@ -157,22 +164,6 @@ public class UsersRoles implements Serializable {
     @Override
     public String toString() {
         return "models.UsersRoles[ id=" + id + " ]";
-    }
-
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

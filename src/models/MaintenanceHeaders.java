@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,33 +35,32 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "MaintenanceHeaders.findAll", query = "SELECT m FROM MaintenanceHeaders m")
     , @NamedQuery(name = "MaintenanceHeaders.findById", query = "SELECT m FROM MaintenanceHeaders m WHERE m.id = :id")
     , @NamedQuery(name = "MaintenanceHeaders.findByTotalCost", query = "SELECT m FROM MaintenanceHeaders m WHERE m.totalCost = :totalCost")
+    , @NamedQuery(name = "MaintenanceHeaders.findByIsDeleted", query = "SELECT m FROM MaintenanceHeaders m WHERE m.isDeleted = :isDeleted")
     , @NamedQuery(name = "MaintenanceHeaders.findByCreatedAt", query = "SELECT m FROM MaintenanceHeaders m WHERE m.createdAt = :createdAt")
     , @NamedQuery(name = "MaintenanceHeaders.findByUpdatedAt", query = "SELECT m FROM MaintenanceHeaders m WHERE m.updatedAt = :updatedAt")
     , @NamedQuery(name = "MaintenanceHeaders.findByCreatedBy", query = "SELECT m FROM MaintenanceHeaders m WHERE m.createdBy = :createdBy")
     , @NamedQuery(name = "MaintenanceHeaders.findByUpdatedBy", query = "SELECT m FROM MaintenanceHeaders m WHERE m.updatedBy = :updatedBy")})
 public class MaintenanceHeaders implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
-    @Column(name = "createdBy")
-    private Integer createdBy;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "totalCost")
     private Double totalCost;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Column(name = "createdBy")
+    private Integer createdBy;
     @Column(name = "updatedBy")
     private Integer updatedBy;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "maintenanceHeadersId")
@@ -72,12 +73,6 @@ public class MaintenanceHeaders implements Serializable {
 
     public MaintenanceHeaders(Integer id) {
         this.id = id;
-    }
-
-    public MaintenanceHeaders(Integer id, Date createdAt, int createdBy) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
     }
 
     public Integer getId() {
@@ -96,6 +91,14 @@ public class MaintenanceHeaders implements Serializable {
         this.totalCost = totalCost;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -112,6 +115,13 @@ public class MaintenanceHeaders implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public Integer getUpdatedBy() {
         return updatedBy;
@@ -162,22 +172,6 @@ public class MaintenanceHeaders implements Serializable {
     @Override
     public String toString() {
         return "models.MaintenanceHeaders[ id=" + id + " ]";
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

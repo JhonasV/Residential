@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,15 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "MaintenanceLines.findById", query = "SELECT m FROM MaintenanceLines m WHERE m.id = :id")
     , @NamedQuery(name = "MaintenanceLines.findByDescription", query = "SELECT m FROM MaintenanceLines m WHERE m.description = :description")
     , @NamedQuery(name = "MaintenanceLines.findByCost", query = "SELECT m FROM MaintenanceLines m WHERE m.cost = :cost")
+    , @NamedQuery(name = "MaintenanceLines.findByIsDeleted", query = "SELECT m FROM MaintenanceLines m WHERE m.isDeleted = :isDeleted")
     , @NamedQuery(name = "MaintenanceLines.findByCreatedAt", query = "SELECT m FROM MaintenanceLines m WHERE m.createdAt = :createdAt")
     , @NamedQuery(name = "MaintenanceLines.findByUpdatedAt", query = "SELECT m FROM MaintenanceLines m WHERE m.updatedAt = :updatedAt")})
 public class MaintenanceLines implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -50,7 +51,8 @@ public class MaintenanceLines implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "cost")
     private Double cost;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -61,7 +63,7 @@ public class MaintenanceLines implements Serializable {
     @ManyToOne(optional = false)
     private MaintenanceHeaders maintenanceHeadersId;
     @JoinColumn(name = "createdBy", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Users createdBy;
     @JoinColumn(name = "updatedBy", referencedColumnName = "id")
     @ManyToOne
@@ -74,10 +76,9 @@ public class MaintenanceLines implements Serializable {
         this.id = id;
     }
 
-    public MaintenanceLines(Integer id, String description, Date createdAt) {
+    public MaintenanceLines(Integer id, String description) {
         this.id = id;
         this.description = description;
-        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -102,6 +103,14 @@ public class MaintenanceLines implements Serializable {
 
     public void setCost(Double cost) {
         this.cost = cost;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Date getCreatedAt() {
@@ -167,14 +176,6 @@ public class MaintenanceLines implements Serializable {
     @Override
     public String toString() {
         return "models.MaintenanceLines[ id=" + id + " ]";
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

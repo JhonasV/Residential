@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,14 +33,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Visitors.findAll", query = "SELECT v FROM Visitors v")
     , @NamedQuery(name = "Visitors.findById", query = "SELECT v FROM Visitors v WHERE v.id = :id")
     , @NamedQuery(name = "Visitors.findByDate", query = "SELECT v FROM Visitors v WHERE v.date = :date")
-    , @NamedQuery(name = "Visitors.findByName", query = "SELECT v FROM Visitors v WHERE v.name = :name")})
+    , @NamedQuery(name = "Visitors.findByName", query = "SELECT v FROM Visitors v WHERE v.name = :name")
+    , @NamedQuery(name = "Visitors.findByIsDeleted", query = "SELECT v FROM Visitors v WHERE v.isDeleted = :isDeleted")})
 public class Visitors implements Serializable {
-
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -49,6 +50,8 @@ public class Visitors implements Serializable {
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @JoinColumn(name = "appartmentsId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Appartments appartmentsId;
@@ -93,6 +96,14 @@ public class Visitors implements Serializable {
         this.name = name;
     }
 
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public Appartments getAppartmentsId() {
         return appartmentsId;
     }
@@ -132,14 +143,6 @@ public class Visitors implements Serializable {
     @Override
     public String toString() {
         return "models.Visitors[ id=" + id + " ]";
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

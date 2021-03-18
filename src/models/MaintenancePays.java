@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -30,30 +32,29 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MaintenancePays.findAll", query = "SELECT m FROM MaintenancePays m")
     , @NamedQuery(name = "MaintenancePays.findById", query = "SELECT m FROM MaintenancePays m WHERE m.id = :id")
+    , @NamedQuery(name = "MaintenancePays.findByIsDeleted", query = "SELECT m FROM MaintenancePays m WHERE m.isDeleted = :isDeleted")
     , @NamedQuery(name = "MaintenancePays.findByCreatedAt", query = "SELECT m FROM MaintenancePays m WHERE m.createdAt = :createdAt")
     , @NamedQuery(name = "MaintenancePays.findByUpdatedAt", query = "SELECT m FROM MaintenancePays m WHERE m.updatedAt = :updatedAt")
     , @NamedQuery(name = "MaintenancePays.findByCreatedBy", query = "SELECT m FROM MaintenancePays m WHERE m.createdBy = :createdBy")
     , @NamedQuery(name = "MaintenancePays.findByUpdatedBy", query = "SELECT m FROM MaintenancePays m WHERE m.updatedBy = :updatedBy")})
 public class MaintenancePays implements Serializable {
 
-    @Column(name = "isDeleted")
-    private Boolean isDeleted;
-
-    @Column(name = "createdBy")
-    private Integer createdBy;
-
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
     @Column(name = "createdAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
     @Column(name = "updatedAt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
+    @Column(name = "createdBy")
+    private Integer createdBy;
     @Column(name = "updatedBy")
     private Integer updatedBy;
     @JoinColumn(name = "maintenanceHeadersId", referencedColumnName = "id")
@@ -70,18 +71,20 @@ public class MaintenancePays implements Serializable {
         this.id = id;
     }
 
-    public MaintenancePays(Integer id, Date createdAt, int createdBy) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.createdBy = createdBy;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Date getCreatedAt() {
@@ -100,6 +103,13 @@ public class MaintenancePays implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public Integer getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
+    }
 
     public Integer getUpdatedBy() {
         return updatedBy;
@@ -148,22 +158,6 @@ public class MaintenancePays implements Serializable {
     @Override
     public String toString() {
         return "models.MaintenancePays[ id=" + id + " ]";
-    }
-
-    public Integer getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(Integer createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Boolean getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(Boolean isDeleted) {
-        this.isDeleted = isDeleted;
     }
     
 }

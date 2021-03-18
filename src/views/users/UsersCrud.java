@@ -38,6 +38,7 @@ public class UsersCrud extends javax.swing.JFrame {
         btnNewUser = new javax.swing.JButton();
         btnRemover = new javax.swing.JButton();
         btnRefresh = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,6 +105,10 @@ public class UsersCrud extends javax.swing.JFrame {
         btnRefresh.setText("Refrescar");
         btnRefresh.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        btnUpdate.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUpdate.setText("Editar");
+        btnUpdate.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -112,14 +117,15 @@ public class UsersCrud extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnNewUser, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                             .addComponent(btnRemover, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)))
-                    .addComponent(jLabel1))
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                            .addComponent(btnUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE))))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -138,7 +144,9 @@ public class UsersCrud extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnRemover)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRefresh)))
+                        .addComponent(btnRefresh)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnUpdate)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -201,6 +209,7 @@ public class UsersCrud extends javax.swing.JFrame {
     public javax.swing.JButton btnNewUser;
     public javax.swing.JButton btnRefresh;
     public javax.swing.JButton btnRemover;
+    public javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
