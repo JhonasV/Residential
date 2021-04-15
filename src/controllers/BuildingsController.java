@@ -46,7 +46,6 @@ public class BuildingsController implements ActionListener{
         this.BuildingsCrud = u;      
         this.BuildingsTable = new DefaultTableModel();
         this.createOrUpdate = r;
-        this.BuildingsCrud.btnNewBuilding.addActionListener(this);
         this.BuildingsCrud.btnRemover.addActionListener(this);
         this.BuildingsCrud.btnRefresh.addActionListener(this);
         this.BuildingsCrud.btnUpdate.addActionListener(this);
@@ -80,11 +79,6 @@ public class BuildingsController implements ActionListener{
            this.CloseCreateOrUpdate(createOrUpdate);
         }
         
-        if(e.getSource() == BuildingsCrud.btnNewBuilding){            
-            createOrUpdate = new BuildingsCreateOrUpdate();
-            BuildingsController c = new BuildingsController(createOrUpdate);
-            createOrUpdate.setVisible(true);
-        }
         
         if(e.getSource() == BuildingsCrud.btnRefresh){
             this.ShowBuildingList(BuildingsCrud);
