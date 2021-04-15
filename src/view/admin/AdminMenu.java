@@ -9,6 +9,9 @@ import controllers.UsersController;
 import views.users.CreateOrUpdate;
 import views.users.UsersCrud;
 
+import controllers.BuildingsController;
+import views.Buildings.BuildingsCreateOrUpdate;
+import views.Buildings.BuildingsCrud;
 /**
  *
  * @author jhonas
@@ -33,6 +36,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btnUserManagement = new javax.swing.JButton();
+        btnUserManagement1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,13 +50,23 @@ public class AdminMenu extends javax.swing.JFrame {
             }
         });
 
+        btnUserManagement1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUserManagement1.setText("Mantenimiento de Edificios");
+        btnUserManagement1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUserManagement1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnUserManagement)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnUserManagement)
+                    .addComponent(btnUserManagement1))
                 .addContainerGap(537, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -60,7 +74,9 @@ public class AdminMenu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnUserManagement)
-                .addContainerGap(273, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnUserManagement1)
+                .addContainerGap(242, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -89,6 +105,13 @@ public class AdminMenu extends javax.swing.JFrame {
         UsersController c = new UsersController(u,create);
         u.setVisible(true);
     }//GEN-LAST:event_btnUserManagementActionPerformed
+
+    private void btnUserManagement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagement1ActionPerformed
+        BuildingsCrud u = new BuildingsCrud();
+        BuildingsCreateOrUpdate create = new BuildingsCreateOrUpdate();
+        BuildingsController c = new BuildingsController(u,create);
+        u.setVisible(true);
+    }//GEN-LAST:event_btnUserManagement1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,6 +150,7 @@ public class AdminMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnUserManagement;
+    private javax.swing.JButton btnUserManagement1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
